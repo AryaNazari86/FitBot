@@ -1,5 +1,5 @@
 import requests
-from bot.credintials import PLATFORM, TOKEN, API_URL, URL
+from bot.credintials import PLATFORM, TOKEN, API_URL
 from bot import strings
 import json
 
@@ -17,7 +17,23 @@ MENU = json.dumps({
         ],
         [
             {
+                "text": strings.MenuStrings.plan
+            },
+        ],
+        [
+            {
+                "text" : strings.MenuStrings.information
+            },
+            {
+                "text" : strings.MenuStrings.guide
+            },
+        ],
+        [
+            {
                 "text" : strings.MenuStrings.update
+            },
+            {
+                "text" : strings.MenuStrings.contact_us
             },
         ],
     ]
@@ -25,7 +41,7 @@ MENU = json.dumps({
 
 
 def send(method, data):
-    if PLATFORM == "TG":
+    if (PLATFORM == "TG") and (data.get('parse_mode') == None):
         data['parse_mode'] = "Markdown"
     
     req = requests.post(

@@ -1,6 +1,6 @@
 import json
 from bot import strings
-from bot.credintials import DARSYAR_GIF, DARSYAR_GUIDE_FILE_ID, DARSYAR_IMAGE_FILE_ID, PLATFORM
+from bot.credintials import PLATFORM
 from user.models import User
 from .api import *
 
@@ -20,23 +20,32 @@ def join_channel(chat_id):
     )
 
 
-def help(chat_id):
-    send(
-        'sendPhoto',
-        {
-            "chat_id": chat_id,
-            "from_chat_id": "@darsyarchannel",
-            "photo": DARSYAR_GUIDE_FILE_ID,
-            "caption": strings.guide,
-            "reply_markup": MENU,
-        }
-    )
-
+def guide(chat_id):
     send(
         'sendMessage',
         {
             "chat_id": chat_id,
-            "text": strings.help,
+            "text": strings.guide,
+            "reply_markup": MENU,
+        }
+    )
+
+def information(chat_id):
+    send(
+        'sendMessage',
+        {
+            "chat_id": chat_id,
+            "text": strings.information,
+            "reply_markup": MENU,
+        }
+    )
+
+def contact_us(chat_id):
+    send(
+        'sendMessage',
+        {
+            "chat_id": chat_id,
+            "text": strings.contact_us,
             "reply_markup": MENU,
         }
     )
@@ -48,7 +57,7 @@ def channel(chat_id):
         {
             "chat_id": chat_id,
             "from_chat_id": "@darsyarchannel",
-            "photo": DARSYAR_IMAGE_FILE_ID,
+            #"photo": DARSYAR_IMAGE_FILE_ID,
             "caption": strings.channel,
             "reply_markup": MENU
         }
@@ -61,7 +70,7 @@ def support(chat_id):
         {
             "chat_id": chat_id,
             "from_chat_id": "@darsyarchannel",
-            "photo": DARSYAR_IMAGE_FILE_ID,
+            #"photo": DARSYAR_IMAGE_FILE_ID,
             "caption": strings.support,
             "reply_markup": MENU
         }
@@ -87,14 +96,6 @@ def start(chat_id, user_id):
 
 
 def Sticker(chat_id):
-    send(
-        'sendAnimation',
-        {
-            "chat_id": chat_id,
-            "animation": DARSYAR_GIF,
-            "reply_markup": MENU
-        }
-    )
     send(
         'sendMessage',
         {

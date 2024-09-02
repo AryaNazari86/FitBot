@@ -2,7 +2,8 @@ import json
 import requests
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from bot.credintials import TOKEN, API_URL, URL
+from bot.credintials import TOKEN, API_URL
+from bot.methods.plan import *
 from bot.methods.settings import *
 from user.models import User
 from bot.methods.general import *
@@ -68,13 +69,14 @@ def bot(request):
                 join_channel(chat_id)
                 return HttpResponse('ok')
             
-            print(state)
             if (not type) and (state == 1):
                 set_age(chat_id, user_id, message['message'].get('text'))
             elif (not type) and (state == 2):
                 set_height(chat_id, user_id, message['message'].get('text'))
             elif (not type) and (state == 3):
                 set_weight(chat_id, user_id, message['message'].get('text'))
+            elif (not type) and (state == 4):
+                plan(chat_id, user_id, message['message'].get('text'))
             
             elif (not type) and (message['message'].get('text')[:6] == "/start"):
                 start(chat_id, user_id)
@@ -83,8 +85,16 @@ def bot(request):
                 bmi(chat_id, user_id)
             elif (not type) and (message['message'].get('text') == strings.MenuStrings.bmr):
                 bmr(chat_id, user_id)
+            elif (not type) and (message['message'].get('text') == strings.MenuStrings.plan):
+                ask_description(chat_id, user_id)
             elif (not type) and (message['message'].get('text') == strings.MenuStrings.update):
                 update(chat_id)
+            elif (not type) and (message['message'].get('text') == strings.MenuStrings.guide):
+                guide(chat_id)
+            elif (not type) and (message['message'].get('text') == strings.MenuStrings.information):
+                information(chat_id)
+            elif (not type) and (message['message'].get('text') == strings.MenuStrings.contact_us):
+                contact_us(chat_id)
 
             elif type and message['callback_query'].get('data')[0] == 'g':
                 set_gender(chat_id, user_id, message['callback_query'].get('data'))
