@@ -7,31 +7,20 @@ MENU = json.dumps({
     "keyboard": [
         [
             {
-                "text": strings.MenuStrings.new_question
+                "text": strings.MenuStrings.bmi
             },
         ],
         [
             {
-                "text": strings.MenuStrings.new_test
+                "text": strings.MenuStrings.bmr
             },
         ],
         [
             {
-                "text": strings.MenuStrings.change_grade
-            },
-            {
-                "text": strings.MenuStrings.show_score
+                "text" : strings.MenuStrings.update
             },
         ],
-        [
-            {
-                "text": strings.MenuStrings.invite
-            },
-            {
-                "text": strings.MenuStrings.support
-            }
-        ],
-        ]
+    ]
 })
 
 
@@ -45,9 +34,5 @@ def send(method, data):
     ).json()
 
     #print(json.dumps(req, indent = 4))
-    
 
-    try:
-        return req['result']['message_id']
-    except:
-        return req
+    return req

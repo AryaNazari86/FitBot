@@ -19,7 +19,12 @@ class User(models.Model):
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100, default = "", blank = True)
-
+    
+    is_male = models.BooleanField(default=True)
+    age = models.IntegerField(default = 20)
+    height = models.FloatField(default = 1.75)
+    weight = models.FloatField(default = 70)
+    
     state = models.IntegerField(default=0)
 
     date_created = models.DateTimeField(auto_now_add=True)

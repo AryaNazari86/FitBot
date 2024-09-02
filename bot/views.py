@@ -3,8 +3,11 @@ import requests
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from bot.credintials import TOKEN, API_URL, URL
+from bot.methods.settings import *
 from user.models import User
-from .methods.general import *
+from bot.methods.general import *
+from bot.methods.bmi import *
+from bot.methods.bmr import *
 from .credintials import BOT_USERNAME, CHANNEL_ID, PLATFORM
 
 @csrf_exempt
@@ -12,7 +15,7 @@ def bot(request):
     try:
         if request.method == 'POST':
             message = json.loads(request.body.decode('utf-8'))
-            print(json.dumps(message, indent=4))        
+            #print(json.dumps(message, indent=4))        
 
             # Fetch data related to the message
             try:
@@ -50,7 +53,7 @@ def bot(request):
                     user_id=user_id
                 )
 
-                state = user.state > 0
+                state = user.state
 
             # Check is user has joined the channel
             req = requests.post(
@@ -64,11 +67,30 @@ def bot(request):
             if req['ok'] == False or (req['result']['status'] in ("left", "banned", "restricted")):
                 join_channel(chat_id)
                 return HttpResponse('ok')
-
             
-
-            # Creates user if doesn't exist
+            print(state)
+            if (not type) and (state == 1):
+                set_age(chat_id, user_id, message['message'].get('text'))
+            elif (not type) and (state == 2):
+                set_height(chat_id, user_id, message['message'].get('text'))
+            elif (not type) and (state == 3):
+                set_weight(chat_id, user_id, message['message'].get('text'))
             
+            elif (not type) and (message['message'].get('text')[:6] == "/start"):
+                start(chat_id, user_id)
+
+            elif (not type) and (message['message'].get('text') == strings.MenuStrings.bmi):
+                bmi(chat_id, user_id)
+            elif (not type) and (message['message'].get('text') == strings.MenuStrings.bmr):
+                bmr(chat_id, user_id)
+            elif (not type) and (message['message'].get('text') == strings.MenuStrings.update):
+                update(chat_id)
+
+            elif type and message['callback_query'].get('data')[0] == 'g':
+                set_gender(chat_id, user_id, message['callback_query'].get('data'))
+
+            else:
+                Sticker(chat_id)
 
         return HttpResponse('ok')
 

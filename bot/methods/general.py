@@ -69,19 +69,17 @@ def support(chat_id):
 
 
 def start(chat_id, user_id):
-    user = User.objects.get( platform = PLATFORM, user_id=user_id)
+    user = User.objects.get(platform = PLATFORM, user_id=user_id)
 
     send(
-        'sendPhoto',
+        'sendMessage',
         {
             "chat_id": chat_id,
-            "from_chat_id": "@darsyarchannel",
-            "photo": DARSYAR_IMAGE_FILE_ID,
-            "caption": strings.start.format(user),
+            "text": strings.start.format(user),
             "reply_markup": json.dumps({
                 "inline_keyboard": [
-                    [{"text": strings.student, "callback_data": "01"}],
-                    [{"text": strings.teacher, "callback_data": "00"}]
+                    [{"text": strings.male, "callback_data": "g1"}],
+                    [{"text": strings.female, "callback_data": "g0"}]
                 ]
             })
         }
