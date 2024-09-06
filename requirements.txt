@@ -2,3 +2,4 @@ django
 requests
 persian
 google-generativeai
+deep_translator
