@@ -1,7 +1,13 @@
-from .credintials import BOT_USERNAME, SUPPORT_EMAIL, SUPPORT_USERNAME, PLATFORM_FARSI
+from .credintials import BOT_USERNAME, SUPPORT_EMAIL, SUPPORT_USERNAME, PLATFORM_FARSI, CHANNEL_LINK
 
 check_if_joined = "👀 بررسی عضویت"
-join_channel = "شسیشسی"
+join_channel = """🙋‍♂️ کاربر عزیز! *این ربات کاملا رایگانه!*
+
+⬅️ اما ممنون میشیم برای حمایت از ما عضو کانال فیتبات بشی: [کانال فیتبات](""" + CHANNEL_LINK + """)
+
+⚠️ بعد از عضویت در کانال، روی گزینه *بررسی عضویت* بزن تا ربات برات فعال بشه"""
+
+
 start = """👋 سلام *{}*!
 
 🔋 به  *🏋️فیتبات🏋️* خوش اومدی!
