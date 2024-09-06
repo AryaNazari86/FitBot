@@ -1,6 +1,7 @@
 from .credintials import BOT_USERNAME, SUPPORT_EMAIL, SUPPORT_USERNAME, PLATFORM_FARSI
 
 check_if_joined = "👀 بررسی عضویت"
+join_channel = "شسیشسی"
 start = """👋 سلام *{}*!
 
 🔋 به  *🏋️فیتبات🏋️* خوش اومدی!
