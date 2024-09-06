@@ -69,7 +69,10 @@ def bot(request):
                 join_channel(chat_id)
                 return HttpResponse('ok')
             
-            if (not type) and (state == 1):
+            if type and message['callback_query'].get('data') == '-':
+                start(chat_id, user_id)
+            
+            elif (not type) and (state == 1):
                 set_age(chat_id, user_id, message['message'].get('text'))
             elif (not type) and (state == 2):
                 set_height(chat_id, user_id, message['message'].get('text'))
