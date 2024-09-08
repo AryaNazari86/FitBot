@@ -30,7 +30,11 @@ def set_gender(chat_id, user_id, data):
         {
             "chat_id": chat_id,
             "text": strings.confirm_gender.format(strings.male if user.is_male else strings.female),
-            "reply_markup": MENU,
+            "reply_markup": json.dumps({
+                "inline_keyboard": [
+                    [{"text": strings.back, "callback_data": "/"}],      
+                ]
+            })
         }
     )
 
@@ -56,6 +60,7 @@ def set_age(chat_id, user_id, text):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
 
     try:
+        text = persian.convert_fa_numbers(text)
         age = int(text)
         user.age = age
 
@@ -64,6 +69,11 @@ def set_age(chat_id, user_id, text):
             {
                 "chat_id": chat_id,
                 "text": strings.confirm_age.format(persian.convert_en_numbers(age)),
+                "reply_markup": json.dumps({
+                    "inline_keyboard": [
+                        [{"text": strings.back, "callback_data": "/"}],      
+                    ]
+                })
             }
         )
 
@@ -75,7 +85,12 @@ def set_age(chat_id, user_id, text):
             'sendMessage',
             {
                 "chat_id": chat_id,
-                "text": f"Invalid Number. Please try again.",
+                "text": strings.invalid_number,
+                "reply_markup": json.dumps({
+                    "inline_keyboard": [
+                        [{"text": strings.back, "callback_data": "/"}],      
+                    ]
+                })
             }
         )
 
@@ -83,6 +98,7 @@ def set_height(chat_id, user_id, text):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
 
     try:
+        text = persian.convert_fa_numbers(text)
         height = eval(text)
         user.height = height
 
@@ -91,6 +107,11 @@ def set_height(chat_id, user_id, text):
             {
                 "chat_id": chat_id,
                 "text": strings.confirm_height.format(persian.convert_en_numbers(height)),
+                "reply_markup": json.dumps({
+                    "inline_keyboard": [
+                        [{"text": strings.back, "callback_data": "/"}],      
+                    ]
+                })
             }
         )
 
@@ -102,7 +123,12 @@ def set_height(chat_id, user_id, text):
             'sendMessage',
             {
                 "chat_id": chat_id,
-                "text": f"Invalid Number. Please try again.",
+                "text": strings.invalid_number,
+                "reply_markup": json.dumps({
+                    "inline_keyboard": [
+                        [{"text": strings.back, "callback_data": "/"}],      
+                    ]
+                })
             }
         )
 
@@ -110,16 +136,18 @@ def set_weight(chat_id, user_id, text):
     user = User.objects.get(platform=PLATFORM, user_id=user_id)
 
     try:
+        text = persian.convert_fa_numbers(text)
         weight = eval(text)
         user.weight = weight
 
-        send(
+        print(send(
             'sendMessage',
             {
                 "chat_id": chat_id,
                 "text": strings.confirm_weight.format(persian.convert_en_numbers(weight)),
+                "reply_markup": MENU,
             }
-        )
+        ))
 
         user.state = 0
         user.save()
@@ -129,6 +157,11 @@ def set_weight(chat_id, user_id, text):
             'sendMessage',
             {
                 "chat_id": chat_id,
-                "text": f"Invalid Number. Please try again.",
+                "text": strings.invalid_number,
+                "reply_markup": json.dumps({
+                    "inline_keyboard": [
+                        [{"text": strings.back, "callback_data": "/"}],      
+                    ]
+                })
             }
         )

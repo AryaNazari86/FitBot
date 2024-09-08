@@ -71,6 +71,10 @@ def bot(request):
             
             if type and message['callback_query'].get('data') == '-':
                 start(chat_id, user_id)
+            elif type and message['callback_query'].get('data') == '/':
+                user.state = 0
+                user.save()
+                update(chat_id)
             
             elif (not type) and (state == 1):
                 set_age(chat_id, user_id, message['message'].get('text'))
@@ -113,8 +117,9 @@ def bot(request):
 
 
 def setwebhook(request):
+    url = request.build_absolute_uri('/') if "https" in request.build_absolute_uri('/') else request.build_absolute_uri('/').replace('http', 'https')
     response = requests.post(
-        API_URL + "setWebhook?url=" + request.build_absolute_uri('/')
+        API_URL + "setWebhook?url=" + url
     ).json()
 
     # print(API_URL + "setWebhook?url=" + request.build_absolute_uri('/'))
